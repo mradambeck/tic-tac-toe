@@ -1,6 +1,7 @@
 // wait for the DOM to finish loading
 $(document).ready(function() {
   console.log("sanity check! Javascript is running.");
+
   //establish board
   var boardArray = [[null,null,null],
                     [null,null,null],
@@ -10,10 +11,41 @@ $(document).ready(function() {
   var winner = null;
   var lastPlayed = null;
   var gameOver = false;
+  var xScore = 0;
+  var oScore = 0;
+
 
   function showBoardArray(){
     console.log(boardArray);
   }
+
+  function logWinner(){
+    winner = lastPlayed;
+    console.log(winner + " wins!");
+    $("#mainTitle").text(winner + " WINS!");
+    // winner animation
+    if (winner === 'X'){
+      $(".x").animate({fontSize: '11.5em'}, 100);
+      $(".x").animate({fontSize: '11em'}, 200);
+    } else if (winner === 'O'){
+      $(".o").animate({fontSize: '11.5em'}, 100);
+      $(".o").animate({fontSize: '11em'}, 200);
+    }
+    logScore(winner);
+    gameOver = true;
+  }
+
+  function logScore(xOrO){
+    if (xOrO === "X"){
+      xScore++;
+    } else if (xOrO === "O"){
+      oScore++;
+    }
+    console.log("X: " + xScore + "; O: " + oScore);
+    $("#x-score").text(xScore);
+    $("#o-score").text(oScore);
+  }
+
 
   $(".btn-danger").on("click", function resetGame(){
     boardArray = [[null,null,null],
@@ -21,19 +53,22 @@ $(document).ready(function() {
                   [null,null,null]];
     playerTurn = 'X';
     turnsPlayed = 0;
+    if (winner) {
+      $("#mainTitle").text(winner + " won the last round.");
+    } else {
+      $("#mainTitle").text("tic.tac.toe");
+    }
     winner = null;
     gameOver = false;
     $(".box").text("");
-    $('.x').removeClass("x", 100000, "linear");
-    $('.o').removeClass("o", 100000, "linear");
-    $("body").removeClass("cats-game", 1000);
-
-    $("#mainTitle").text(lastPlayed + " won the last round.");
+    $('.x').removeClass("x");
+    $('.o').removeClass("o");
+    $("body").removeClass("cats-game");
     showBoardArray();
     console.log("playerTurn: " + playerTurn + " turnsPlayed: " + turnsPlayed + " Winner: " + winner);
   });
 
-  $(".box").on("click", function handleClick(event){
+  $(".box").on("click", function gamePlay(event){
     // Grabs css ID, converts to integer, logs to boardArray
     if (!gameOver){
       var cellID = $(this).attr('id');
@@ -64,58 +99,31 @@ $(document).ready(function() {
         // determines winner
         if (((boardArray[0][0]==='X')&&(boardArray[0][1]==='X')&&(boardArray[0][2]==='X')) ||
           ((boardArray[0][0]==='O')&&(boardArray[0][1]==='O')&&(boardArray[0][2]==='O'))) {
-            winner = lastPlayed;
-            console.log(winner + " wins!");
-            $("#mainTitle").text(winner + " WINS!");
-            gameOver = true;
+            logWinner();
         } else if (((boardArray[1][0]==='X')&&(boardArray[1][1]==='X')&&(boardArray[1][2]==='X')) ||
           ((boardArray[1][0]==='O')&&(boardArray[1][1]==='O')&&(boardArray[1][2]==='O'))){
-            winner = lastPlayed;
-            console.log(winner + " wins!");
-            $("#mainTitle").text(winner + " WINS!");
-            gameOver = true;
+            logWinner();
         } else if (((boardArray[2][0]==='X')&&(boardArray[2][1]==='X')&&(boardArray[2][2]==='X')) ||
           ((boardArray[2][0]==='O')&&(boardArray[2][1]==='O')&&(boardArray[2][2]==='O'))){
-            winner = lastPlayed;
-            console.log(winner + " wins!");
-            $("#mainTitle").text(winner + " WINS!");
-            gameOver = true;
+            logWinner();
         } else if (((boardArray[0][0]==='X')&&(boardArray[1][0]==='X')&&(boardArray[2][0]==='X')) ||
           ((boardArray[0][0]==='O')&&(boardArray[1][0]==='O')&&(boardArray[2][0]==='O'))){
-            winner = lastPlayed;
-            console.log(winner + " wins!");
-            $("#mainTitle").text(winner + " WINS!");
-            gameOver = true;
+            logWinner();
         } else if (((boardArray[0][1]==='X')&&(boardArray[1][1]==='X')&&(boardArray[2][1]==='X')) ||
           ((boardArray[0][1]==='O')&&(boardArray[1][1]==='O')&&(boardArray[2][1]==='O'))){
-            winner = lastPlayed;
-            console.log(winner + " wins!");
-            $("#mainTitle").text(winner + " WINS!");
-            gameOver = true;
+            logWinner();
         } else if (((boardArray[0][2]==='X')&&(boardArray[1][2]==='X')&&(boardArray[2][2]==='X')) ||
           ((boardArray[0][2]==='O')&&(boardArray[1][2]==='O')&&(boardArray[2][2]==='O'))){
-            winner = lastPlayed;
-            console.log(winner + " wins!");
-            $("#mainTitle").text(winner + " WINS!");
-            gameOver = true;
+            logWinner();
         } else if (((boardArray[0][2]==='X')&&(boardArray[1][2]==='X')&&(boardArray[2][2]==='X')) ||
           ((boardArray[0][2]==='O')&&(boardArray[1][2]==='O')&&(boardArray[2][2]==='O'))){
-            winner = lastPlayed;
-            console.log(winner + " wins!");
-            $("#mainTitle").text(winner + " WINS!");
-            gameOver = true;
+            logWinner();
         } else if (((boardArray[0][0]==='X')&&(boardArray[1][1]==='X')&&(boardArray[2][2]==='X')) ||
           ((boardArray[0][0]==='O')&&(boardArray[1][1]==='O')&&(boardArray[2][2]==='O'))){
-            winner = lastPlayed;
-            console.log(winner + " wins!");
-            $("#mainTitle").text(winner + " WINS!");
-            gameOver = true;
+            logWinner();
         } else if (((boardArray[0][2]==='X')&&(boardArray[1][1]==='X')&&(boardArray[2][0]==='X')) ||
           ((boardArray[0][2]==='O')&&(boardArray[1][1]==='O')&&(boardArray[2][0]==='O'))){
-            winner = lastPlayed;
-            console.log(winner + " wins!");
-            $("#mainTitle").text(winner + " WINS!");
-            gameOver = true;
+            logWinner();
         } else if ((turnsPlayed === 9)&& !winner){
             console.log("Cat's Game!");
             $("#mainTitle").text("Cat's Game!");
@@ -129,4 +137,6 @@ $(document).ready(function() {
     // Logs boardArray for debugging
     showBoardArray();
   });
+
+
 });
