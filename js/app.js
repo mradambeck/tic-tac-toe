@@ -31,7 +31,15 @@ $(document).ready(function() {
       $(".o").animate({fontSize: '11.5em'}, 100);
       $(".o").animate({fontSize: '11em'}, 200);
     }
+
     logScore(winner);
+    // Easter egg
+    if (xScore === 4 && oScore === 0){
+      $("#mainTitle").text("X is kicking ass!");
+    } else if (xScore === 0 && oScore === 4) {
+      $("#mainTitle").text("O rules!");
+    }
+
     gameOver = true;
   }
 
@@ -46,7 +54,7 @@ $(document).ready(function() {
     $("#o-score").text(oScore);
   }
 
-
+// Game reset
   $(".btn-danger").on("click", function resetGame(){
     boardArray = [[null,null,null],
                   [null,null,null],
