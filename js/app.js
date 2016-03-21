@@ -19,18 +19,23 @@ $(document).ready(function() {
     console.log(boardArray);
   }
 
+  function animateWin(cells){
+    $(cells).animate({fontSize: '11.5em'}, 100);
+    $(cells).animate({fontSize: '11em'}, 200);
+  }
+
   function logWinner(){
     winner = lastPlayed;
     console.log(winner + " wins!");
     $("#mainTitle").text(winner + " WINS!");
-    // winner animation
-    if (winner === 'X'){
-      $(".x").animate({fontSize: '11.5em'}, 100);
-      $(".x").animate({fontSize: '11em'}, 200);
-    } else if (winner === 'O'){
-      $(".o").animate({fontSize: '11.5em'}, 100);
-      $(".o").animate({fontSize: '11em'}, 200);
-    }
+
+    // if (winner === 'X'){
+    //   $(".x").animate({fontSize: '11.5em'}, 100);
+    //   $(".x").animate({fontSize: '11em'}, 200);
+    // } else if (winner === 'O'){
+    //   $(".o").animate({fontSize: '11.5em'}, 100);
+    //   $(".o").animate({fontSize: '11em'}, 200);
+    // }
 
     logScore(winner);
     // Easter egg
@@ -104,33 +109,42 @@ $(document).ready(function() {
           turnsPlayed++;
         }
 
-        // determines winner
+        // determines winner - could be more DRY but wasn't sure how to accomplish
         if (((boardArray[0][0]==='X')&&(boardArray[0][1]==='X')&&(boardArray[0][2]==='X')) ||
           ((boardArray[0][0]==='O')&&(boardArray[0][1]==='O')&&(boardArray[0][2]==='O'))) {
+            animateWin("#00, #01, #02");
             logWinner();
         } else if (((boardArray[1][0]==='X')&&(boardArray[1][1]==='X')&&(boardArray[1][2]==='X')) ||
           ((boardArray[1][0]==='O')&&(boardArray[1][1]==='O')&&(boardArray[1][2]==='O'))){
+            animateWin("#10, #11, #12");
             logWinner();
         } else if (((boardArray[2][0]==='X')&&(boardArray[2][1]==='X')&&(boardArray[2][2]==='X')) ||
           ((boardArray[2][0]==='O')&&(boardArray[2][1]==='O')&&(boardArray[2][2]==='O'))){
+            animateWin("#20, #21, #22");
             logWinner();
         } else if (((boardArray[0][0]==='X')&&(boardArray[1][0]==='X')&&(boardArray[2][0]==='X')) ||
           ((boardArray[0][0]==='O')&&(boardArray[1][0]==='O')&&(boardArray[2][0]==='O'))){
+            animateWin("#00, #10, #20");
             logWinner();
         } else if (((boardArray[0][1]==='X')&&(boardArray[1][1]==='X')&&(boardArray[2][1]==='X')) ||
           ((boardArray[0][1]==='O')&&(boardArray[1][1]==='O')&&(boardArray[2][1]==='O'))){
+            animateWin("#01, #11, #21");
             logWinner();
         } else if (((boardArray[0][2]==='X')&&(boardArray[1][2]==='X')&&(boardArray[2][2]==='X')) ||
           ((boardArray[0][2]==='O')&&(boardArray[1][2]==='O')&&(boardArray[2][2]==='O'))){
+            animateWin("#02, #12, #22");
             logWinner();
         } else if (((boardArray[0][2]==='X')&&(boardArray[1][2]==='X')&&(boardArray[2][2]==='X')) ||
           ((boardArray[0][2]==='O')&&(boardArray[1][2]==='O')&&(boardArray[2][2]==='O'))){
+            animateWin("#02, #12, #22");
             logWinner();
         } else if (((boardArray[0][0]==='X')&&(boardArray[1][1]==='X')&&(boardArray[2][2]==='X')) ||
           ((boardArray[0][0]==='O')&&(boardArray[1][1]==='O')&&(boardArray[2][2]==='O'))){
+            animateWin("#00, #11, #22");
             logWinner();
         } else if (((boardArray[0][2]==='X')&&(boardArray[1][1]==='X')&&(boardArray[2][0]==='X')) ||
           ((boardArray[0][2]==='O')&&(boardArray[1][1]==='O')&&(boardArray[2][0]==='O'))){
+            animateWin("#02, #11, #20");
             logWinner();
         } else if ((turnsPlayed === 9)&& !winner){
             console.log("Cat's Game!");
